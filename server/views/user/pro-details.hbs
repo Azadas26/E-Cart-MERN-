@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div
+        style="width: 70%;height: 70vh;justify-content: center;align-items: center;background-image: url(/adminpro/{{pro._id}}.jpg);">
+      </div>
+    </div>
+    <div class="col-md-6">
+        <div class="mt-5 p-5">
+                <h1>{{pro.pname}}</h1>
+                <h3>Discription : {{pro.discription}}</h3>
+                <h2>Price : {{pro.price}}/-</h2>
+                <a href="/cart?id={{pro._id}}" class="btn btn-success mt-5" style="width: 60%;">Add To cart</a>
+        </div>
+    </div>
+  </div>
+</div>

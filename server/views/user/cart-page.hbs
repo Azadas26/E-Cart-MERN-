@@ -1,0 +1,39 @@
+<table class="table m-4 p-5 text-center">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Product name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Discription</th>
+      <th scope="col">Price</th>
+       <th scope="col">Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each pro}}
+      <tr>
+        <th scope="row">{{@index}}</th>
+        <td>{{this.product.pname}}</td>
+        <td>{{this.qut}}</td>
+        <td>{{this.product.discription}}</td>
+        <td>{{this.product.price}}</td>
+         <td><img src="/adminpro/{{this.product._id}}.jpg" style="width: 200px; height: 200px;"  alt="pro Image"></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<div class="m-5 p-5">
+   {{#if total}}
+   <form action="/placeorder" method="post">
+    <div>   
+  <h1>Total price : {{total.total}} /-  <br></h1>
+ 
+       <h3 for="">Delivery type</h3> 
+       <input type="radio" name="del" value="cod"> <label for="">Cash on Delivery</label> <br>
+       <input type="radio" name="del" value="online"> <label for="">Online payment</label> <br>
+       <input type="submit" value="Place Order" class="btn btn-success">
+    </div>
+   </form>
+{{/if}}
+</div>

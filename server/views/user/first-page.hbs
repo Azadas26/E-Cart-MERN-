@@ -1,0 +1,18 @@
+<din class="container-fluid">
+  <div class="row p-5">
+    {{#each pro}}
+      <div class="col-md-3 mt-5">
+       <a href="/prodetails?id={{this._id}}" style="text-decoration: none;" class="text-dark">
+         <div class="card m-auto text-center" style="width: 18rem;">
+          <img class="card-img-top p-3" src="/adminpro/{{this._id}}.jpg" alt="Card image cap" />
+          <div class="card-body">
+            <h5 class="card-title">{{this.pname}}</h5>
+            <p class="card-text">Some quick example text to build on the card
+              title and make up the bulk of the card's content.</p>
+          </div>
+        </div>
+       </a>
+      </div>
+    {{/each}}
+  </div>
+</din>

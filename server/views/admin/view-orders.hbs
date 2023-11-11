@@ -1,0 +1,30 @@
+<table class="table m-4 p-5 text-center">
+  <thead>
+    <tr>
+      <th scope="col">No</th>
+      <th scope="col">Product name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Discription</th>
+      <th scope="col">Price</th>
+      <th scope="col">Payment Type</th>
+       <th scope="col">User Name</th>
+        <th scope="col">User Mail-Address</th>
+       <th scope="col">Image</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each pro}}
+      <tr>
+        <th scope="row">{{@index}}</th>
+        <td>{{this.product.pname}}</td>
+        <td>{{this.qut}}</td>
+        <td>{{this.product.discription}}</td>
+        <td>{{this.product.price}}</td>
+         <td>{{this.user.name}}</td>
+          <td>{{this.user.email}}</td>
+        <td>{{this.type}}</td>
+         <td><img src="/adminpro/{{this.product._id}}.jpg" style="width: 200px; height: 200px;"  alt="pro Image"></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

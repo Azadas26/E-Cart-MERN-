@@ -27,10 +27,8 @@ module.exports = {
       resolve(YourModel);
     });
   },
-  Schema_For_Admin_Products: ()=>
-  {
-    return new promise((resolve,reject)=>
-    {
+  Schema_For_Admin_Products: () => {
+    return new promise((resolve, reject) => {
       const AdminSchema = new Schema({
         // Define your schema fields here
         pname: {
@@ -51,6 +49,6 @@ module.exports = {
       const AdminModel = mongoose.model("AdminModel", AdminSchema);
 
       resolve(AdminModel);
-    })
-  }
+    });
+  },
 };

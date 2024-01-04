@@ -1,34 +1,40 @@
 var express = require("express");
 var router = express.Router();
 var userdb = require("../database/userBase");
+const session = require("express-session");
 
 var verfyUserLogin = (req, res, next) => {
   if (req.session.user) {
+    console.log("Callled");
+    res.json({ login: true });
     next();
   } else {
-    res.redirect("/login");
+    console.log("Calllednooo");
+    res.json({ login: false });
+    //res.redirect("/login");
   }
 };
 /* GET home page. */
 router.get("/", function (req, res, next) {
   userdb.View_Admin_added_products().then((pro) => {
     if (req.session.user) {
-      res.render("./user/first-page", {
-        userhd: true,
-        pro,
-        user: req.session.user,
-      });
+      // res.rend("./user/first-page", {userhd: true,pro,user: req.session.user, });
+      res.json({userhd: true,pro,user: req.session.user, });
     } else {
-      res.render("./user/first-page", { userhd: true, pro });
+      //res.render("./user/first-page", { userhd: true, pro });
+      res.json({ userhd: true, pro });
     }
   });
 });
 router.get("/signup", (req, res) => {
+  
   res.render("./user/signup-page", { userhd: true });
 });
 router.post("/signup", (req, res) => {
   userdb.Do_signup(req.body).then((data) => {
-    res.redirect("/login");
+   
+    //res.redirect("/login");
+    res.json({ su: "ssssssss" });
   });
 });
 router.get("/login", (req, res) => {
@@ -47,14 +53,18 @@ router.get("/login", (req, res) => {
   }
 });
 router.post("/login", (req, res) => {
+  console.log(req.body);
   userdb.Do_Login(req.body).then((info) => {
     if (info) {
       req.session.user = info;
       req.session.user.status = true;
-      res.redirect("/");
+      console.log(req.session.user);
+      res.json({ login: true });
+      // res.redirect("/");
     } else {
       req.session.logerr = true;
-      res.redirect("/login");
+      res.json({ login: false });
+      // res.redirect("/login");
     }
   });
 });
@@ -72,21 +82,19 @@ router.get("/prodetails", verfyUserLogin, (req, res) => {
   });
 });
 router.get("/cart", (req, res) => {
+   
   userdb.Do_Cart(req.query.id, req.session.user._id).then((data) => {
     res.redirect("/");
   });
 });
 router.get("/viewcart", verfyUserLogin, (req, res) => {
+  console.log(req.session.user);
   userdb.View_Carted_products(req.session.user._id).then((pro) => {
     userdb
       .Total_price_for_carted_products(req.session.user._id)
       .then((total) => {
-        res.render("./user/cart-page", {
-          userhd: true,
-          pro,
-          user: req.session.user,
-          total,
-        });
+        res.json({cart: { userhd: true, pro, user: req.session.user, total },});
+        //res.render("./user/cart-page", {userhd: true,pro,user: req.session.user,total});
       });
   });
 });
@@ -100,7 +108,7 @@ router.post("/placeorder", verfyUserLogin, (req, res) => {
             user: user,
             products: pro,
             total: total,
-            type : req.body.del ==  'cod' ? "placed" : "pending"
+            type: req.body.del == "cod" ? "placed" : "pending",
           };
           userdb.Place_Order(state).then((info) => {
             userdb
@@ -113,13 +121,19 @@ router.post("/placeorder", verfyUserLogin, (req, res) => {
     });
   });
 });
-router.get('/vieworders',verfyUserLogin,(req,res)=>
+router.get("/vieworders", verfyUserLogin, (req, res) => {
+  userdb
+    .Get_Details_From_Orders_collection(req.session.user._id)
+    .then((pro) => {
+      res.render("./user/view-orders", {
+        userhd: true,
+        pro,
+        user: req.session.user,
+      });
+    });
+});
+router.get('/samp',(req,res)=>
 {
-    userdb. Get_Details_From_Orders_collection(req.session.user._id).then((pro)=>
-    {
-      res.render('./user/view-orders',{ userhd: true,pro,user: req.session.user})
-    })
+  console.log(req.session.user,"hello");
 })
-
-
 module.exports = router;
